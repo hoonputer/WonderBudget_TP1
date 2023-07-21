@@ -1,4 +1,4 @@
-# postgresql(1) 현재 파일 활용해 적재 완료
+# postgresql(1) 말고 현재 파일 활용해 적재 완료
 
 import psycopg2
 import csv
