@@ -1,5 +1,3 @@
-# postgresql(1) 대신 (2)활용해 적재 완료
-
 import psycopg2
 import csv
 import sys
