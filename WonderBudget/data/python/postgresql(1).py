@@ -58,19 +58,19 @@ def main():
     """)
 
     # csv 파일 속 데이터 옮기기
-    with open ('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/csv/hotel.csv', 'r') as h_file :
+    with open ('WonderBudget/data/csv/hotel.csv', 'r') as h_file :
         h_reader = csv.DictReader(h_file)
         for data in h_reader:
             cur.execute("INSERT INTO hotel(Hotel_name, Date, Price, Client, Rating, Grade, Address, Day) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
                         (data['Hotel_name'], data['Date'], data['Price'], data['Client'], data['Rating'], data['Grade'], data['Address'], data['Day']))
             
-    with open ('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/csv/flight.csv', 'r') as f_file :
+    with open ('WonderBudget/data/csv/flight.csv', 'r') as f_file :
         f_reader = csv.DictReader(f_file)
         for data in f_reader:
             cur.execute("INSERT INTO flight(name, leavetime, reachtime, seat, charge, date, day, airport, leavehour) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
                         (data['name'], data['leavetime'], data['reachtime'], data['seat'], data['charge'], data['date'], data['day'], data['airport'], data['leavehour']))
             
-    with open ('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/csv/car.csv', 'r') as c_file :
+    with open ('WonderBudget/data/csv/car.csv', 'r') as c_file :
         c_reader = csv.DictReader(c_file)
         for data in c_reader:
             cur.execute("INSERT INTO car(date, week, car_name, price, engine, seater) VALUES (%s, %s, %s, %s, %s, %s)",
