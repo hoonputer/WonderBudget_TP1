@@ -1,1 +1,184 @@
-<!-- index 메인 페이지 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WonderBudget</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .orange-bar {
+            background-color: hsl(27, 100%, 65%);
+            width: 1011px;
+            height: 76px;
+            margin: 20px auto;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .menu-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: transparent;
+            border: 2px solid hsl(27, 100%, 65%);
+            border-radius: 20px;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .menu-button:hover::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+        border: 2px solid white;
+        border-radius: 50%;
+    }
+
+        .hotel-button {
+            margin-right: 300px;
+            font-size: 22px;
+        }
+
+        .flight-button {
+            margin-right: 300px;
+            font-size: 22px;
+        }
+
+        .car-button {
+            margin-right: 0;
+            font-size: 22px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: calc(50% + 20px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .popup h4 {
+            margin-top: 0;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        .saved-info {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            background-color: white; /* 흰색 바 색상 추가 */
+            width: 1011px; /* 주황색 바와 같은 너비 */
+            height: 76px; /* 주황색 바와 같은 높이 */
+            line-height: 76px; /* 세로 가운데 정렬 */
+            border-radius: 50px; /* 주황색 바와 같은 둥근 모서리 */
+            border: 2px solid black; /* 검은색 테두리 추가 */
+            position: relative;
+        }
+        .saved-info-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        </style>
+    </head>
+    <body>
+        <img src="../static/Logo.png" alt="Logo" style="display: block; margin: auto; width: 427px; height: 96px;">
+
+        <!-- 주황색 바 -->
+        <div class="orange-bar">
+            <a href="#" class="menu-button hotel-button" onclick="showPopup('hotel')">호텔</a>
+            <a href="#" class="menu-button flight-button">항공권</a>
+            <a href="#" class="menu-button car-button">렌트카</a>
+        </div>
+
+        <!-- 흰색 바 3개 -->
+        <div class="saved-info" id="savedInfo">
+            <div class="saved-info-content" id="savedInfoContent"></div>
+        </div>
+        <div class="saved-info"></div>
+        <div class="saved-info"></div>
+
+        <!-- 팝업 내용은 생략합니다. -->
+
+        <div class="popup" id="hotelPopup">
+            <h4>지역을 선택해 주세요!</h4>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="hotelOption" value="제주도 제주시"> 제주도 제주시
+                </div>
+                <div class="option">
+                    <input type="radio" name="hotelOption" value="제주도 서귀포시"> 제주도 서귀포시
+                    <div class="options">
+                        <p>최소 별점을 선택해 주세요:</p>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="0" id="rating0" checked>
+                            <label for="rating0">상관 없음</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="1" id="rating1">
+                            <label for="rating1">1점</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="3" id="rating3">
+                            <label for="rating3">3점</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="5" id="rating5">
+                            <label for="rating5">5점</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="7" id="rating7">
+                            <label for="rating7">7점</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="starRating" value="9" id="rating9">
+                            <label for="rating9">9점</label>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="saveInfo()">저장하기</button>
+            </div>
+        </div>
+
+        <script>
+            function showPopup(popupId) {
+                var popup = document.getElementById(popupId + 'Popup');
+                popup.style.display = 'block';
+            }
+
+            function saveInfo() {
+                var starRating = document.querySelector('input[name="starRating"]:checked').value;
+                var hotelOption = document.querySelector('input[name="hotelOption"]:checked').value;
+                var savedInfoContent = document.getElementById('savedInfoContent');
+                savedInfoContent.innerHTML = `지역: ${hotelOption}, 최소 별점: ${starRating}점`;
+
+                // 팝업 닫기
+                var popup = document.getElementById('hotelPopup');
+                popup.style.display = 'none';
+            }
+        </script>
+    </body>
+</html>
+
