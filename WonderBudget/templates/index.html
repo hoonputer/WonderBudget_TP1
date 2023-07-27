@@ -33,14 +33,14 @@
         }
 
         .menu-button:hover::before {
-        content: "";
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        width: calc(100% + 20px);
-        height: calc(100% + 20px);
-        border: 2px solid white;
-        border-radius: 50%;
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            border: 2px solid white;
+            border-radius: 50%;
     }
 
         .hotel-button {
@@ -109,37 +109,61 @@
         <!-- 주황색 바 -->
         <div class="orange-bar">
             <a href="#" class="menu-button hotel-button" onclick="showPopup('hotel')">호텔</a>
-            <a href="#" class="menu-button flight-button">항공권</a>
-            <a href="#" class="menu-button car-button">렌트카</a>
+            <a href="#" class="menu-button flight-button" onclick="showPopup('flight')">항공권</a>
+            <a href="#" class="menu-button car-button" onclick="showPopup('car')">렌트카</a>
         </div>
 
         <!-- 흰색 바 3개 -->
         <div class="saved-info" id="savedInfo">
-            <div class="saved-info-content" id="savedInfoContent"></div>
+            <div class="saved-info-content" id="savedInfoContent">
+            </div>
         </div>
-        <div class="saved-info"></div>
-        <div class="saved-info"></div>
+        <div class="saved-info" id="savedInfo2"></div>
+        <div class="saved-info" id="savedInfo3"></div>
+
+        <form method="post" action="/">
+            <!-- 호텔 정보 입력 -->
+            <input type="number" name="h_data1" placeholder="별점을 입력하세요">
+            <input type="number" name="h_data2" placeholder="지역을 입력하세요">
+            <input type="number" name="h_data3" placeholder="여행 날짜를 입력하세요">
+            <button type="submit">저장하기</button>
+        </form>
+    
+        <form method="post" action="/">
+            <!-- 항공권 정보 입력 -->
+            <input type="number" name="f_data1" placeholder="항공사를 입력하세요">
+            <input type="number" name="f_data2" placeholder="좌석 등급을 입력하세요">
+            <input type="number" name="f_data3" placeholder="여행 날짜를 입력하세요">
+            <button type="submit">저장하기</button>
+        </form>
+    
+        <form method="post" action="/">
+            <!-- 렌트카 정보 입력 -->
+            <input type="number" name="c_data1" placeholder="좌석 수를 입력하세요">
+            <input type="number" name="c_data2" placeholder="엔진 종류를 입력하세요">
+            <input type="number" name="c_data3" placeholder="여행 날짜를 입력하세요">
+            <button type="submit">저장하기</button>
+        </form>
 
         <!-- 팝업 내용은 생략합니다. -->
 
         <div class="popup" id="hotelPopup">
             <h4>지역을 선택해 주세요!</h4>
-            <div class="options">
-                <div class="option">
-                    <input type="radio" name="hotelOption" value="제주도 제주시"> 제주도 제주시
-                </div>
-                <div class="option">
-                    <input type="radio" name="hotelOption" value="제주도 서귀포시"> 제주도 서귀포시
-                    <div class="options">
-                        <p>최소 별점을 선택해 주세요:</p>
-                        <div class="option">
-                            <input type="radio" name="starRating" value="0" id="rating0" checked>
-                            <label for="rating0">상관 없음</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="starRating" value="1" id="rating1">
-                            <label for="rating1">1점</label>
-                        </div>
+            <div class="option">
+                <input type="radio" name="hotelOption" value="제주도 제주시"> 제주도 제주시
+            </div>
+            <div class="option">
+                <input type="radio" name="hotelOption" value="제주도 서귀포시"> 제주도 서귀포시
+                <div class="options">
+                    <p>최소 별점을 선택해 주세요:</p>
+                    <div class="option">
+                        <input type="radio" name="starRating" value="0" id="rating0" checked>
+                        <label for="rating0">상관 없음</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="starRating" value="1" id="rating1">
+                        <label for="rating1">1점</label>
+                    </div>
                         <div class="option">
                             <input type="radio" name="starRating" value="3" id="rating3">
                             <label for="rating3">3점</label>
@@ -156,29 +180,211 @@
                             <input type="radio" name="starRating" value="9" id="rating9">
                             <label for="rating9">9점</label>
                         </div>
+                        <div class="options">
+                            <label for="travelDateSelect">여행 날짜를 선택해 주세요!</label>
+                            <select name="travelDate" id="travelDateSelect">    
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <button onclick="saveInfo()">저장하기</button>
             </div>
         </div>
 
+        <div class="popup" id="flightPopup">
+            <h4>항공사를 선택해 주세요!</h4>
+            <select name="flightOption" id="flightOptionSelect">
+                <option value="아시아나">아시아나</option>
+                <option value="대한항공">대한항공</option>
+                <option value="이스타항공">이스타항공</option>
+                <option value="제주항공">제주항공</option>
+                <option value="티웨이항공">티웨이항공</option>
+                <option value="진에어">진에어</option>
+                <option value="에어부산">에어부산</option>
+                <option value="에어서울">에어서울</option>
+                <option value="하이에어">하이에어</option>
+            </select>
+                <!-- 좌석 등급 선택 -->
+                <div class="options">
+                    <h4>좌석 등급을 선택해 주세요</h4>
+                    <div class="option">
+                        <input type="radio" name="seatOption" value="일반석"> 일반석
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="seatOption" value="할인석"> 할인석
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="seatOption" value="특가석"> 특가석
+                    </div>
+                    <div class="options">
+                        <label for="flightTravelDateSelect">여행 날짜를 선택해 주세요!</label>
+                        <select name="flightTravelDate" id="flightTravelDateSelect"></select>                          
+                        </select>
+                    </div>
+                </div>
+                <button onclick="saveFlightInfo()">저장하기</button>
+            </div>
+        </div>
+
+        <div class="popup" id="carPopup">
+            <h4>좌석 수를 선택하세요!</h4>
+                <select name="seatNumber" id="seatNumberSelect">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="7">7</option>
+                    <option value="11">9</option>
+                    <option value="11">8</option>
+                    <option value="11">15</option>
+                    <option value="11">12</option>
+                </select>
+            <h4>엔진 종류를 선택하세요!</h4>
+            <div class="options">
+                <select name="engineType" id="engineTypeSelect">
+                    <option value="가솔린">가솔린</option>
+                    <option value="디젤">디젤</option>
+                    <option value="전기">전기</option>
+                    <option value="LPG">LPG</option>
+                </select>
+            </div>
+            <div class="options">
+                <label for="carTravelDateSelect">여행 날짜는 선택해 주세요!</label>
+                <select name="travelDate" id="carTravelDateSelect">                
+                </select>
+            </div>
+
+            <button onclick="saveCarInfo()">저장하기</button>
+        </div>
+        
+
         <script>
             function showPopup(popupId) {
-                var popup = document.getElementById(popupId + 'Popup');
-                popup.style.display = 'block';
+            var popup = document.getElementById(popupId + 'Popup');
+            popup.style.display = 'block';
             }
 
             function saveInfo() {
-                var starRating = document.querySelector('input[name="starRating"]:checked').value;
-                var hotelOption = document.querySelector('input[name="hotelOption"]:checked').value;
-                var savedInfoContent = document.getElementById('savedInfoContent');
-                savedInfoContent.innerHTML = `지역: ${hotelOption}, 최소 별점: ${starRating}점`;
+            var starRating = document.querySelector('input[name="starRating"]:checked').value;
+            var hotelOption = document.querySelector('input[name="hotelOption"]:checked').value;
+            var travelDate = document.getElementById('travelDateSelect').value; // 선택된 여행 날짜 가져오기
+            var savedInfoContent = document.getElementById('savedInfoContent');
+            savedInfoContent.innerHTML = `지역: ${hotelOption}, 최소 별점: ${starRating}점, 여행 날짜: ${travelDate}`;
+
+            document.getElementById('h_data1').value = starRating;
+            document.getElementById('h_data2').value = hotelOption;
+            document.getElementById('h_data3').value = travelDate;
 
                 // 팝업 닫기
-                var popup = document.getElementById('hotelPopup');
-                popup.style.display = 'none';
+            var popup = document.getElementById('hotelPopup');
+            popup.style.display = 'none';
+
             }
+
+            function showFlightPopup() {
+            var flightPopup = document.getElementById('flightPopup');
+            flightPopup.style.display = 'block';
+        }
+
+        // 선택한 항공사와 좌석 등급 정보 저장하기
+            function saveFlightInfo() {
+            var flightOption = document.getElementById('flightOptionSelect').value;
+            var seatOption = document.querySelector('input[name="seatOption"]:checked').value;
+            var flightTravelDate = document.getElementById('flightTravelDateSelect').value; // 선택된 항공 여행 날짜 가져오기
+            var savedInfoContent2 = document.getElementById('savedInfo2');
+            savedInfoContent2.innerHTML = `항공사: ${flightOption}, 좌석 등급: ${seatOption}, 여행 날짜: ${flightTravelDate}`;
+            
+            document.getElementById('f_data1').value = flightOption;
+            document.getElementById('f_data2').value = seatOption;
+            document.getElementById('f_data3').value = flightTravelDate;
+
+            var flightPopup = document.getElementById('flightPopup');
+            flightPopup.style.display = 'none';
+        }
+
+            function showCarPopup() {
+            var carPopup = document.getElementById('carPopup');
+            carPopup.style.display = 'block';
+        }
+
+
+            function saveCarInfo() {
+            var seatNumber = document.getElementById('seatNumberSelect').value;
+            var engineType = document.getElementById('engineTypeSelect').value;
+            var carTravelDate = document.getElementById('carTravelDateSelect').value;
+            var savedInfoContent3 = document.getElementById('savedInfo3');
+            savedInfoContent3.innerHTML = `좌석 수: ${seatNumber}, 엔진 종류: ${engineType}, 여행 날짜: ${carTravelDate}`;
+
+            document.getElementById('c_data1').value = seatNumber;
+            document.getElementById('c_data2').value = engineType;
+            document.getElementById('c_data3').value = carTravelDate;
+
+            var carPopup = document.getElementById('carPopup');
+            carPopup.style.display = 'none';
+        }
+
+       
+
+
+         // 'YYYY-MM-DD' 형식의 날짜 문자열로 변환하는 함수
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 여행 시작일과 종료일
+    const startDate = new Date('2023-07-25');
+    const endDate = new Date('2023-08-31');
+
+    // 여행 날짜 select box에 옵션 추가
+    const travelDateSelect = document.getElementById('travelDateSelect');
+    const currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+        const option = document.createElement('option');
+        option.value = formatDate(currentDate);
+        option.textContent = formatDate(currentDate);
+        travelDateSelect.appendChild(option);
+
+        currentDate.setDate(currentDate.getDate() + 1); // 다음 날짜로 이동
+    }
+
+    const flightTravelDateSelect = document.getElementById('flightTravelDateSelect');
+    const flightCurrentDate = new Date(startDate);
+    while (flightCurrentDate <= endDate) {
+        const option = document.createElement('option');
+        option.value = formatDate(flightCurrentDate);
+        option.textContent = formatDate(flightCurrentDate);
+        flightTravelDateSelect.appendChild(option);
+
+        flightCurrentDate.setDate(flightCurrentDate.getDate() + 1); // 다음 날짜로 이동
+    }
+
+    const carTravelDateSelect = document.getElementById('carTravelDateSelect');
+        const carCurrentDate = new Date(startDate);
+        while (carCurrentDate <= endDate) {
+            const option = document.createElement('option');
+            option.value = formatDate(carCurrentDate);
+            option.textContent = formatDate(carCurrentDate);
+            carTravelDateSelect.appendChild(option);
+
+            carCurrentDate.setDate(carCurrentDate.getDate() + 1); // 다음 날짜로 이동
+        }
+
+        function saveData() {
+        var starRating = document.querySelector('input[name="starRating"]:checked').value;
+        var hotelOption = document.querySelector('input[name="hotelOption"]:checked').value;
+        var travelDate = document.getElementById('travelDateSelect').value;
+
+        // h_data1, h_data2, h_data3에 데이터 저장
+        document.getElementById('h_data1').value = starRating;
+        document.getElementById('h_data2').value = hotelOption;
+        document.getElementById('h_data3').value = travelDate;
+    }
+
         </script>
+
+예측 결과: {{ pred }} 
+
     </body>
 </html>
 
