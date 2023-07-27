@@ -29,7 +29,7 @@ def index():
     if request.method == 'POST':
         try:
             # 호텔 가격 예측
-            h_data1 = int(request.form['h_data1'])   # 별점
+            h_data1 = int(request.form['h_data1'])   # 등급
             h_data2 = str(request.form['h_data2'])   # 지역
             h_data3 = datetime.strptime(request.form['h_data3'], '%Y-%m-%d')  # 날짜 datetime으로 인식하도록 함
             h_days = (h_data3 - datetime(1970, 1, 1)).days
@@ -39,9 +39,9 @@ def index():
                 'Address' : [h_data2]
             }
             h_df = pd.DataFrame(h_data, columns=['Date', 'Grade', 'Address'])   # 데이터프레임 형태로 변환
-            imputer = SimpleImputer(strategy='most_frequent')
-            h_df_imputer = pd.DataFrame(imputer.fit_transform(h_df), columns=h_df.columns)
-            h_pred = int(h_model.predict(h_df_imputer).round(1))
+            #imputer = SimpleImputer(strategy='most_frequent')
+            #h_df_imputer = pd.DataFrame(imputer.fit_transform(h_df), columns=h_df.columns)
+            h_pred = int(h_model.predict(h_df).round(1))
 
             # 항공권 가격 예측
             f_data1 = request.form['f_data1']   # 항공사
@@ -54,8 +54,8 @@ def index():
                 'seat' : [f_data2]
             }
             f_df = pd.DataFrame(f_data, columns=['date', 'name', 'seat'])   # 데이터프레임 형태로 변환
-            f_df_imputer = pd.DataFrame(imputer.fit_transform(f_df), columns=f_df.columns)
-            f_pred = int(f_model.predict(f_df_imputer).round(1))
+            #f_df_imputer = pd.DataFrame(imputer.fit_transform(f_df), columns=f_df.columns)
+            f_pred = int(f_model.predict(f_df).round(1))
 
             # 렌트카 가격 예측
             c_data1 = int(request.form['c_data1'])   # 좌석 수
@@ -68,8 +68,8 @@ def index():
                 'seater' : [c_data1],
             }
             c_df = pd.DataFrame(c_data, columns=['date', 'engine', 'seater'])   # 데이터프레임 형태로 변환
-            c_df_imputer = pd.DataFrame(imputer.fit_transform(c_df), columns=c_df.columns)
-            c_pred = int(c_model.predict(c_df_imputer).round(1))
+            #c_df_imputer = pd.DataFrame(imputer.fit_transform(c_df), columns=c_df.columns)
+            c_pred = int(c_model.predict(c_df).round(1))
 
             # 세 예측값 더하기
             pred = h_pred + f_pred + c_pred
