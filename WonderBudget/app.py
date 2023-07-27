@@ -26,25 +26,25 @@ def index():
     if request.method == 'POST':
         try:
             # 호텔 가격 예측
-            h_data1 = float(request.form['h_data1'])
-            h_data2 = float(request.form['h_data2'])
-            h_data3 = float(request.form['h_data3'])
-            h_array = np.array([[h_data1, h_data2, h_data3]])
-            h_pred = int(h_model.predict(h_array))
+            h_data1 = float(request.form['h_data1'])   # 별점
+            h_data2 = object(request.form['h_data2'])   # 지역
+            h_data3 = object(request.form['h_data3'])   # 날짜
+            h_array = np.array([[h_data3, h_data1, h_data2]])   # csv 순서와 동일하게 삽입
+            h_pred = int(h_model.predict(h_array).round(1))
 
             # 항공권 가격 예측
-            f_data1 = float(request.form['f_data1'])
-            f_data2 = float(request.form['f_data2'])
-            f_data3 = float(request.form['f_data3'])
-            f_array = np.array([[f_data1, f_data2, f_data3]])
-            f_pred = int(h_model.predict(f_array))
+            f_data1 = object(request.form['f_data1'])   # 항공사
+            f_data2 = object(request.form['f_data2'])   # 좌석 등급
+            f_data3 = object(request.form['f_data3'])   # 날짜
+            f_array = np.array([[f_data1, f_data2, f_data3]])   # csv 순서와 동일하게 삽입
+            f_pred = int(h_model.predict(f_array).round(1))
 
             # 렌트카 가격 예측
-            c_data1 = float(request.form['c_data1'])
-            c_data2 = float(request.form['c_data2'])
-            c_data3 = float(request.form['c_data3'])
-            c_array = np.array([[c_data1, c_data2, c_data3]])
-            c_pred = int(h_model.predict(c_array))
+            c_data1 = int(request.form['c_data1'])   # 좌석 수
+            c_data2 = object(request.form['c_data2'])   # 엔진 종류
+            c_data3 = object(request.form['c_data3'])   # 날짜
+            c_array = np.array([[c_data3, c_data2, c_data1]])   # csv 순서와 동일하게 삽입
+            c_pred = int(h_model.predict(c_array).round(1))
 
             # 세 예측값 더하기
             pred = h_pred + f_pred + c_pred
