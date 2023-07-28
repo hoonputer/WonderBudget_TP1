@@ -45,7 +45,7 @@ def index():
             h_df_encoded = h_encoder.transform(h_df)   # 모델 만들때와 동일한 인코더
             h_pred = int(h_model.predict(h_df_encoded).round(1))
 
-            # 항공권 가격 예측
+            # 출발 항공권 가격 예측
             f_data1 = request.form['f_data1']   # 항공사
             f_data2 = request.form['f_data2']   # 좌석 종류
             f_data3 = request.form['f_data3']   # 날짜
@@ -59,6 +59,21 @@ def index():
             f_df = pd.DataFrame(f_data, columns=['name', 'seat', 'date', 'airport'])   # 데이터프레임 형태로 변환
             f_df_encoded = f_encoder.transform(f_df)   # 모델 만들때와 동일한 인코더
             f_pred = int(f_model.predict(f_df_encoded).round(1))
+
+            # 도착 항공권 가격 예측
+            f_data11 = request.form['f_data11']   # 항공사
+            f_data12 = request.form['f_data12']   # 좌석 종류
+            f_data13 = request.form['f_data13']   # 날짜
+            f_data14 = request.form['f_data14']   # 공항
+            f_data100 = {
+                'name' : [f_data11],
+                'seat' : [f_data12],
+                'date' : [f_data13],
+                'airport' :[f_data14]
+            }
+            f_df100 = pd.DataFrame(f_data100, columns=['name', 'seat', 'date', 'airport'])   # 데이터프레임 형태로 변환
+            f_df_encoded100 = f_encoder.transform(f_df100)   # 모델 만들때와 동일한 인코더
+            f_pred100 = int(f_model.predict(f_df_encoded100).round(1))
 
             # 렌트카 가격 예측
             c_data1 = request.form['c_data1']   # 날짜
@@ -74,7 +89,7 @@ def index():
             c_pred = int(c_model.predict(c_df_encoded).round(1))
 
             # 세 예측값 더하기
-            pred = h_pred + f_pred + c_pred
+            pred = h_pred + f_pred + c_pred + f_pred100
 
             return render_template('index.html', pred = pred)
         
@@ -84,3 +99,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
