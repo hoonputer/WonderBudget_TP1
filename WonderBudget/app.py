@@ -9,12 +9,12 @@ from datetime import date, timedelta
 app = Flask(__name__)
 
 # 모델 불러오기
-h_model = joblib.load(open('WonderBudget/data/pkl/hotel_model.pkl', 'rb'))
-f_model = joblib.load(open('WonderBudget/data/pkl/flight_model.pkl', 'rb'))
-c_model = joblib.load(open('WonderBudget/data/pkl/car_model.pkl', 'rb'))
-h_encoder = joblib.load(open('WonderBudget/data/pkl/hotel_encoder.pkl', 'rb'))
-f_encoder = joblib.load(open('WonderBudget/data/pkl/flight_encoder.pkl', 'rb'))
-c_encoder = joblib.load(open('WonderBudget/data/pkl/car_encoder.pkl', 'rb'))
+h_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/hotel_model.pkl', 'rb'))
+f_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/flight_model.pkl', 'rb'))
+c_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/car_model.pkl', 'rb'))
+h_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/hotel_encoder.pkl', 'rb'))
+f_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/flight_encoder.pkl', 'rb'))
+c_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/car_encoder.pkl', 'rb'))
 
 
 # 에러페이지
