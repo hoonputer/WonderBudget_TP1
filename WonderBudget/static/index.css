@@ -1,0 +1,81 @@
+body {
+  text-align: center;
+}
+
+img {
+  display: block;
+  margin: 20px auto;
+  width: 427px;
+  height: 96px;
+}
+
+/* Styling for the orange box */
+.orange-box {
+  background-color: orange;
+  border-radius: 35px;
+  padding: 20px;
+  margin: 20px;
+}
+
+/* Styling for the form elements */
+form {
+  margin-top: 20px;
+}
+
+label,
+select,
+input {
+  display: block;
+  margin: 10px auto;
+}
+
+/* Styling for the prediction result */
+.prediction {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Styling for the dashboard iframes */
+iframe {
+  display: block;
+  margin: 20px auto;
+  border: none;
+  width: 800px;
+  height: 600px;
+}
+
+/* 스타일을 추가합니다. */
+.dashboard-button {
+  font-size: 2em;
+  background-color: #19b400;
+  border-radius: 50px;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 특정 버튼에만 적용할 스타일은 클래스 선택자를 사용합니다. */
+.hotel-dashboard-button {
+  /* 특정 버튼에만 적용할 스타일을 작성합니다. */
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.input-section {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.main-date-container {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 400px;
+  padding-right: 400px;
+  margin-bottom: 20px;
+}

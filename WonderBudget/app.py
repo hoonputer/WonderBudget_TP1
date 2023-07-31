@@ -3,17 +3,19 @@ from flask import Flask, render_template, request
 import pandas as pd
 import joblib
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from datetime import date, timedelta
 
 # 플라스크 클래스명 지정
 app = Flask(__name__)
 
 # 모델 불러오기
-h_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/hotel_model.pkl', 'rb'))
-f_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/flight_model.pkl', 'rb'))
-c_model = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/car_model.pkl', 'rb'))
-h_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/hotel_encoder.pkl', 'rb'))
-f_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/flight_encoder.pkl', 'rb'))
-c_encoder = joblib.load(open('/Users/hyunjulee/tp1/WonderBudget_TP1/WonderBudget/data/pkl/car_encoder.pkl', 'rb'))
+h_model = joblib.load(open('WonderBudget/data/pkl/hotel_model.pkl', 'rb'))
+f_model = joblib.load(open('WonderBudget/data/pkl/flight_model.pkl', 'rb'))
+c_model = joblib.load(open('WonderBudget/data/pkl/car_model.pkl', 'rb'))
+h_encoder = joblib.load(open('WonderBudget/data/pkl/hotel_encoder.pkl', 'rb'))
+f_encoder = joblib.load(open('WonderBudget/data/pkl/flight_encoder.pkl', 'rb'))
+c_encoder = joblib.load(open('WonderBudget/data/pkl/car_encoder.pkl', 'rb'))
+
 
 # 에러페이지
 @app.errorhandler(404)
@@ -31,19 +33,29 @@ def index():
     if request.method == 'POST':
         try:
             # 호텔 가격 예측
-            h_data1 = request.form['h_data1']   # 날짜
-            h_data2 = float(request.form['h_data2'])   # 평점
-            h_data3 = int(request.form['h_data3'])   # 등급
-            h_data4 = request.form['h_data4']   # 지역
-            h_data = {
-                'Date' : [h_data1],
-                'Rating' : [h_data2],
-                'Grade' : [h_data3],
-                'Address' : [h_data4]
-            }
-            h_df = pd.DataFrame(h_data, columns=['Date', 'Rating', 'Grade', 'Address'])   # 데이터프레임 형태로 변환
-            h_df_encoded = h_encoder.transform(h_df)   # 모델 만들때와 동일한 인코더
-            h_pred = int(h_model.predict(h_df_encoded).round(1))
+            h_data1 = request.form['h_data1']   # 입실 날짜
+            h_data2 = request.form['h_data2']   # 퇴실 날짜
+            h_data3 = float(request.form['h_data3'])   # 평점
+            h_data4 = int(request.form['h_data4'])   # 등급
+            h_data5 = request.form['h_data5']   # 지역
+
+            h_pred = 0
+            def iterate_between_dates(start_date, end_date):
+                current_date = start_date
+                while current_date < end_date:
+                    yield current_date
+                    current_date += timedelta(days=1)
+            
+            for current_date in iterate_between_dates(date.fromisoformat(h_data1), date.fromisoformat(h_data2)):
+                h_data = {
+                    'Date' : [current_date],
+                    'Rating' : [h_data3],
+                    'Grade' : [h_data4],
+                    'Address' : [h_data5]
+                }
+                h_df = pd.DataFrame(h_data, columns=['Date', 'Rating', 'Grade', 'Address'])   # 데이터프레임 형태로 변환
+                h_df_encoded = h_encoder.transform(h_df)   # 모델 만들때와 동일한 인코더
+                h_pred = h_pred + int(h_model.predict(h_df_encoded).round(1))
 
             # 출발 항공권 가격 예측
             f_data1 = request.form['f_data1']   # 항공사
@@ -77,21 +89,31 @@ def index():
 
             # 렌트카 가격 예측
             c_data1 = request.form['c_data1']   # 날짜
-            c_data2 = request.form['c_data2']   # 엔진 종류
-            c_data3 = int(request.form['c_data3'])   # 좌석 수
-            c_data = {
-                'date' : [c_data1],
-                'engine' : [c_data2],
-                'seater' : [c_data3],
-            }
-            c_df = pd.DataFrame(c_data, columns=['date', 'engine', 'seater'])   # 데이터프레임 형태로 변환
-            c_df_encoded = c_encoder.transform(c_df)   # 모델 만들때와 동일한 인코더
-            c_pred = int(c_model.predict(c_df_encoded).round(1))
+            c_data2 = request.form['c_data2']   # 날짜
+            c_data3 = request.form['c_data3']   # 엔진 종류
+            c_data4 = int(request.form['c_data4'])   # 좌석 수
+
+            c_pred = 0
+            def iterate_between_dates(start_date, end_date):
+                current_date2 = start_date
+                while current_date2 < end_date:
+                    yield current_date2
+                    current_date2 += timedelta(days=1)
+            
+            for current_date2 in iterate_between_dates(date.fromisoformat(c_data1), date.fromisoformat(c_data2)):
+                c_data = {
+                    'date' : [current_date],
+                    'engine' : [c_data3],
+                    'seater' : [c_data4],
+                }
+                c_df = pd.DataFrame(c_data, columns=['date', 'engine', 'seater'])   # 데이터프레임 형태로 변환
+                c_df_encoded = c_encoder.transform(c_df)   # 모델 만들때와 동일한 인코더
+                c_pred = c_pred + int(c_model.predict(c_df_encoded).round(1))
 
             # 세 예측값 더하기
             pred = h_pred + f_pred + c_pred + f_pred100
 
-            return render_template('index.html', pred = pred)
+            return render_template('index.html', pred = format(pred, ','))
         
         except Exception as e:
             print(f"예측 도중 오류 발생: {e}")
@@ -99,4 +121,3 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
